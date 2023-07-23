@@ -1,1 +1,1 @@
-# CSharp_Fundamentals - Stanislav Severin
+# CSharp_Fundamentals
