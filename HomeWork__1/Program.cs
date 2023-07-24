@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace HomeWork1
 {
@@ -7,11 +7,11 @@ namespace HomeWork1
         static void Main(string[] args)
         {
             //1
-            //Console.Write("Введіть сторону квадрата: ");
-            //int a = Convert.ToInt32(Console.ReadLine());
-            //Console.WriteLine("");
-            //Console.WriteLine($"Периметр квадрата = {a * 4} см");
-            //Console.WriteLine($"Площа квадрата = {Math.Pow(a, 2)} см^2");
+            Console.Write("Введіть сторону квадрата: ");
+            int a = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("");
+            Console.WriteLine($"Периметр квадрата = {a * 4} см");
+            Console.WriteLine($"Площа квадрата = {Math.Pow(a, 2)} см^2");
 
             //2
             //Console.Write("Як Вас звати?:  ");
