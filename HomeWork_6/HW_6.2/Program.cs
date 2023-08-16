@@ -4,14 +4,9 @@ namespace HomeWork6
 {
     class Program
     {
-        public class BrokeNumberException : Exception
+        public class MyException : Exception
         {
-            public BrokeNumberException(string message) : base(message) { }
-        }
-
-        public class TypeNumberException : Exception
-        {
-            public TypeNumberException(string message) : base(message) { }
+            public MyException(string message) : base(message) { }
         }
 
         public static int[] ReadNumber(int start, int end)
@@ -31,23 +26,18 @@ namespace HomeWork6
 
                     if (!int.TryParse(input, out int number))
                     {
-                        throw new TypeNumberException("Введене значення не є цілим числом. Спробуйте ще раз!");
+                        throw new MyException("Введене значення не є цілим числом. Спробуйте ще раз!");
                     }
 
                     if (number < start || number > end || number <= backNumber)
                     {
-                        throw new BrokeNumberException("Введене число виходить за рамки вказаного діапазону або менше за попереднє. Спробуйте ще раз!");
+                        throw new MyException("Введене число виходить за рамки вказаного діапазону або менше за попереднє. Спробуйте ще раз!");
                     }
 
                     numbers[i] = number;
                     backNumber = number;
                 }
-                catch (TypeNumberException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    i--;
-                }
-                catch (BrokeNumberException ex)
+                catch (MyException ex)
                 {
                     Console.WriteLine(ex.Message);
                     i--;
@@ -73,36 +63,29 @@ namespace HomeWork6
 
                     if (startValue > endValue)
                     {
-                        Console.WriteLine("Початкове значення не може бути більше кінцевого. Спробуйте ще раз!\n");
-                        continue;
+                        throw new MyException("Початкове значення не може бути більше кінцевого. Спробуйте ще раз!\n");
                     }
 
                     break;
                 }
-                catch (FormatException)
+                catch (MyException ex)
                 {
-                    Console.WriteLine("Введено невірний формат числа. Спробуйте ще раз!\n");
+                    Console.WriteLine(ex.Message);
                 }
             } while (true);
 
+            int[] numbers = ReadNumber(startValue, endValue);
 
-            try
+            Console.WriteLine("\nВаші числа: ");
+            //foreach (int number in numbers)
+            //{
+            //    Console.Write(number + ", ");
+            //}
+            //Console.WriteLine("");
+            for (int i = 0; i < numbers.Length; i++)
             {
-                int[] numbers = ReadNumber(startValue, endValue);
-
-                Console.WriteLine("Ваші числа: ");
-                foreach (int number in numbers)
-                {
-                    Console.Write(number + ", ");
-                }
-            }
-            catch (TypeNumberException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            catch (BrokeNumberException ex)
-            {
-                Console.WriteLine(ex.Message);
+                Console.Write(numbers[i]);
+                Console.Write((i < numbers.Length - 1) ? ", " : ".");
             }
         }
     }
