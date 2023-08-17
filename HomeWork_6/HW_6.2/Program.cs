@@ -22,12 +22,7 @@ namespace HomeWork6
 
                 try
                 {
-                    string input = Console.ReadLine();
-
-                    if (!int.TryParse(input, out int number))
-                    {
-                        throw new MyException("Введене значення не є цілим числом. Спробуйте ще раз!");
-                    }
+                    int number = Convert.ToInt32(Console.ReadLine());
 
                     if (number < start || number > end || number <= backNumber)
                     {
@@ -40,6 +35,16 @@ namespace HomeWork6
                 catch (MyException ex)
                 {
                     Console.WriteLine(ex.Message);
+                    i--;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Введено невірний формат числа. Спробуйте ще раз!");
+                    i--;
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Введено занадто велике число. Спробуйте ще раз!");
                     i--;
                 }
             }
@@ -71,6 +76,14 @@ namespace HomeWork6
                 catch (MyException ex)
                 {
                     Console.WriteLine(ex.Message);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Введено невірний формат числа. Спробуйте ще раз!");
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("Введено занадто велике число. Спробуйте ще раз!");
                 }
             } while (true);
 
