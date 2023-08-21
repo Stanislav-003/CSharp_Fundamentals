@@ -22,12 +22,22 @@ namespace HomeWork6
 
                 try
                 {
+
+                    string input = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(input))
+                    {
+                        throw new MyException("Введена порожня стрічка. Введіть коректне число!");
+                    }
+
                     int number = Convert.ToInt32(Console.ReadLine());
 
                     if (number < start || number > end || number <= backNumber)
                     {
                         throw new MyException("Введене число виходить за рамки вказаного діапазону або менше за попереднє. Спробуйте ще раз!");
                     }
+
+                    
 
                     numbers[i] = number;
                     backNumber = number;
