@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HomeWork8
 {
-    class Program
+    class Program 
     {
         static Circle CreateCircle(string name)
         {
@@ -71,6 +71,15 @@ namespace HomeWork8
             else
             {
                 Console.WriteLine("Не вдалося знайти фігуру з найбільшим периметром.");
+            }
+
+            shapes.Sort();
+            Console.WriteLine();
+
+            Console.WriteLine("Відсортований список фігур!");
+            foreach (var s in shapes)
+            {
+                Console.WriteLine($"{s.Name}, {s.Area()}");
             }
         } 
     }
