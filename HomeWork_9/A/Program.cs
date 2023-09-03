@@ -1,0 +1,113 @@
+﻿using System;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+
+namespace HomeWork9
+{
+    class Program
+    {
+        static Circle CreateCircle(string name)
+        {
+            Console.Write("Введіть радіус: ");
+            int radius = Convert.ToInt32(Console.ReadLine());
+            return new Circle(name, radius);
+        }
+
+        static Square CreateSquare(string name)
+        {
+            Console.Write("Введіть сторону: ");
+            int side = Convert.ToInt32(Console.ReadLine());
+            return new Square(name, side);
+        }
+        static void Main(string[] args)
+        {
+            //1. Створіть список фігур і заповніть його 6 різними фігурами (коло та квадрат).
+            List<Shape> shapes = new List<Shape>();
+
+            for (int i = 0; i < 3; i++)
+            {
+                Console.Write($"Оберіть форму Circle або Square для {i + 1} елемента: ");
+                string shapeType = Console.ReadLine().ToLower();
+
+                switch (shapeType)
+                {
+                    case "circle":
+                        shapes.Add(CreateCircle($"Circle {i + 1}"));
+                        break;
+                    case "square":
+                        shapes.Add(CreateSquare($"Square {i + 1}"));
+                        break;
+                    default:
+                        Console.WriteLine("Невірний тип форми.");
+                        i--;
+                        break;
+                }
+            }
+
+            //2. Знайдіть і запишіть у файл форми з площею з діапазону [10,100].
+            string sortedShapestxt = @"C:\Users\Stanislav Severin\Desktop\C#Fundamentals\CSharp_Fundamentals\HomeWork9\Sorted shapes.txt";
+
+            var sortedByAreaShapes = from shape in shapes
+                               where shape.Area() >= 10 && shape.Area() <= 100
+                               select shape;
+
+            try
+            {
+                using (StreamWriter sr = new StreamWriter(sortedShapestxt))
+                {
+                    sr.WriteLine("Площа форм у діапазоні [10, 100]: \n");
+
+                    foreach (var shape in sortedByAreaShapes)
+                    {
+                        sr.WriteLine($"Фігура: {shape.Name}");
+                        sr.WriteLine($"Площа: {shape.Area()}");
+                        sr.WriteLine($"Периметр: {shape.Perimeter()}");
+                        sr.WriteLine();
+                    }
+                }
+                Console.WriteLine($"\nДані було записано у файл {sortedShapestxt}");
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"Помилка у файлі: {e.Message}");
+            }
+
+            //3. Знайдіть і запишіть у файл фігури, назва яких містить букву «а».
+            try
+            {
+                using (StreamWriter sr = new StreamWriter(sortedShapestxt, true))
+                {
+                    Regex regex = new Regex("a|A");
+
+                    sr.WriteLine("Фігури, які містять букву «а» з площею від [10, 100]: \n");
+
+                    foreach (var shape in sortedByAreaShapes) //або shapes, якщо потрібно сортування усіх фігур введених користувачем...
+                    {
+                        if (regex.IsMatch(shape.Name))
+                        {
+                            sr.WriteLine(shape.Name);
+                        }
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"Помилка у файлі: {e.Message}");
+            }
+
+            //4. Знайти та видалити зі списку всі фігури з периметром менше 5. Записати отриманий список у консоль.
+            var sortedByPerimeterShapes = from shape in shapes
+                                          where shape.Perimeter() > 5
+                                          select shape;
+
+            Console.WriteLine("Фігури з периметром більше 5: ");
+            foreach (var shape in sortedByPerimeterShapes)
+            {
+                Console.WriteLine(shape.Name);
+            }
+        }
+    }
+}
